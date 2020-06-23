@@ -36,13 +36,15 @@ operationalsql-*suffix* |SQL server
 ## Connect to ADPDesktop
 In this section you are going to establish a Remote Desktop Connection to ADPDesktop virtual machine.
 
+**IMPORTANT**: If you are executing the lab in a Spektra CloudLabs environment, you will be automatically connected to the ADPDesktop VM and there is no need to execute the steps below. You can skip to the next section **Install required software onto ADPDesktop**.
+
 **IMPORTANT**|
 -------------|
 **Execute these steps on your host computer**|
 
 1.	In the Azure Portal, navigate to the lab resource group and click the **ADPDesktop** virtual machine.
 
-2.	On the ADPDesktop blade, from the Overview menu, click the Connect button. 
+2.	On the ADPDesktop blade, from the Overview menu, click the Connect button.
 
     ![](./Media/Lab1-Image02.png)
 
@@ -50,10 +52,15 @@ In this section you are going to establish a Remote Desktop Connection to ADPDes
 
     ![](./Media/Lab1-Image03.png)
 
-4. If you have issues connecting via Remote Desktop Protocol (RDP), you can then connect via Azure Bastion by clicking the **Bastion** tab and providing the credentials indicated in the next section. This will open a new browser tab with the remote connection via SSL and HTML5.
+4.	Once the RDP file is downloaded, click on it to establish an RDP connection with ADPDesktop
+
+5.	User the following credentials to authenticate:
+    <br>- **User Name**: ADPAdmin
+    <br>- **Password**: P@ssw0rd123!
+
+6. If you connected successfully using RDP, skip this step and go to the next section. If you faced any connectivity issues connecting via Remote Desktop Protocol (RDP), you can try connect via Azure Bastion by clicking the **Bastion** tab and providing the credentials indicated in the next section. This will open a new browser tab with the remote connection via SSL and HTML5.
 
     ![](./Media/Lab1-Image54.png)
-
 
 ## Install required software onto ADPDesktop
 In this section you are going to install Power BI Desktop and Azure Data Studio on ADPDesktop.
@@ -64,11 +71,6 @@ In this section you are going to install Power BI Desktop and Azure Data Studio 
 -------------|
 **Execute these steps inside the ADPDesktop remote desktop connection**|
 
-1.	Once the RDP file is downloaded, click on it to establish an RDP connection with ADPDesktop
-
-2.	User the following credentials to authenticate:
-    <br>- **User Name**: ADPAdmin
-    <br>- **Password**: P@ssw0rd123!
 3.	Once logged in, accept the default privacy settings.
 
 4.	Using the browser, download and install the latest version of following software. During the setup, accept all default settings:
@@ -158,29 +160,6 @@ with (distribution = round_robin)
 go
 ```
 
-## Create Staging Container on Azure Data Lake Storage Gen2
-In this section you create a staging container in your data lake account that will be used as a staging environment for Polybase before data can be copied to Azure Synapse Analytics.
-
-![](./Media/Lab1-Image24.jpg)
-
-**IMPORTANT**|
--------------|
-**Execute these steps on your host computer**|
-
-1.	In the Azure Portal, go to the lab resource group and locate the Azure Storage account **synapsedatalake*suffix***. 
-
-2.	On the **Overview** panel, click **Containers**.
-
-    ![](./Media/Lab1-Image25.png)
-
-3.	On the **synapsedatalake*suffix* – Containers** blade, click **+ Container**. On the **New container** blade, enter the following details:
-    <br>- **Name**: polybase
-    <br>- **Public access level**: Private (no anynymous access)
-
-4.	Click **OK** to create the new container.
-
-    ![](./Media/Lab1-Image27.png)
-
 ## Create Azure Data Factory Pipeline to Copy Relational Data
 In this section you will build an Azure Data Factory pipeline to copy a table from NYCDataSets database to Azure Synapse Analytics data warehouse.
 
@@ -199,7 +178,7 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
     ![](./Media/Lab1-Image55.png)
 
 
-3. In the **Azure Data Factory** portal and click the **Author *(pencil icon)*** option on the left-hand side panel. Under **Connections** tab, click **Linked Services** and then click **+ New** to create a new linked service connection.
+3. In the **Azure Data Factory** portal and click the **Manage *(toolcase icon)*** option on the left-hand side panel. Under **Linked services** menu item, click **+ New** to create a new linked service connection.
 
     ![](./Media/Lab1-Image29.png)
 
@@ -358,7 +337,7 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
 -------------|
 **Execute these steps on your host computer**|
 
-1.	Open the **Azure Data Factory** portal and click the **Author *(pencil icon)*** option on the left-hand side panel. Under **Factory Resources** tab, click the ellipsis **(…)** next to **Pipelines** and then click **Add Pipeline** to create a new pipeline.
+1.	Open the **Azure Data Factory** portal and click the **Author *(pencil icon)*** option on the left-hand side panel. Under **Factory Resources** tab, click the ellipsis **(…)** next to **Pipelines** and then click **New Pipeline** to create a new pipeline.
 2.	On the **New Pipeline** tab, enter the following details:
     <br>- **General > Name**: Lab1 - Copy Collision Data
 3.	Leave remaining fields with default values.
@@ -392,7 +371,7 @@ In this section you will build an Azure Data Factory pipeline to copy a table fr
 10.	To monitor the execution of your pipeline, click on the **Monitor** menu on the left-hand side panel.
 11.	You should be able to see the Status of your pipeline execution on the right-hand side panel.
 
-    ![](./Media/Lab1-Image49.png)
+    ![](./Media/Lab1-Image49updated.png)
 
 ## Visualize Data with Power BI
 In this section you are going to use Power BI to visualize data from Azure Synapse Analytics. The Power BI report will use an Import connection to query Azure Synapse Analytics and visualise Motor Vehicle Collision data from the table you loaded in the previous exercise.
